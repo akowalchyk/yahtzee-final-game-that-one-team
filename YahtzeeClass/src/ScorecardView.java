@@ -236,6 +236,7 @@ public class ScorecardView extends Scorecard {
         //resetting the handView and the Roll Dice Button
         currGame.resetHand();
         currGame.resetRollDiceB();
+
     }
 
     /**

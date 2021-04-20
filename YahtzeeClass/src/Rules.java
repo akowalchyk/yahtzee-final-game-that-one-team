@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  Class Rules: Acts as the Rules object for a game of yahtzee.
@@ -24,9 +25,11 @@ import java.io.*;
 public class Rules {
 
     //attributes are 'global' and can be used throughout class
-    private static int ROLLS;
-    private static int HAND_SIZE;
-    private static int SIDES;
+    private static int ROLLS = 3;
+    private static int HAND_SIZE = 5;
+    private static int SIDES = 6;
+    private static int NUM_PLayers;
+    private static ArrayList<YahtzeeGUI> playerScreens = new ArrayList<YahtzeeGUI>();
 
 
     private YahtzeeGUI game;
@@ -47,6 +50,16 @@ public class Rules {
     private void setRolls(int rolls) {
         ROLLS = rolls;
     }
+
+    /**
+     Setter for the NUM_PLayers attribute
+     *
+     * @param numPlayers: rolls attribute
+     */
+    private void setNumPlayers(int numPlayers) {
+        NUM_PLayers = numPlayers;
+    }
+
 
     /**
      Setter for the HAND_SIZE attribute
@@ -74,6 +87,17 @@ public class Rules {
     public static int getSides() {
         return SIDES;
     }
+
+
+    /**
+     Getter for the NUM_Players attribute
+     *
+     * @return NUM_PLayers
+     */
+    public static int getNumPlayers() {
+        return NUM_PLayers;
+    }
+
 
     /**
      Getter for the HAND_SIZE attribute
@@ -109,13 +133,11 @@ public class Rules {
         // arrays for options of # of sides on a die, # of dice in a hand,
         // and number of rolls allowed
         Integer diceOptions[] = {6, 8, 12};
-        Integer handOptions[] = {5, 6, 7};
-        Integer rollOptions[] = {3,4,5,6,7,8,9,10};
+        Integer numPlayers[] = {1,2,3,4,5,6};
 
         // creates comboBox for each option of rules
         JComboBox diceBox = new JComboBox(diceOptions);
-        JComboBox handBox = new JComboBox(handOptions);
-        JComboBox rollBox = new JComboBox(rollOptions);
+        JComboBox playersBox = new JComboBox(numPlayers);
 
         // sets up dice combo box
         JLabel diceOptionsLabel = new JLabel("select # of sides on a die");
@@ -123,32 +145,22 @@ public class Rules {
         diceBox.addItemListener(this::diceBoxChanged);
         setSIDES(diceOptions[0]);
 
-        // sets up hand options box
-        JLabel handOptionsLabel = new JLabel("select # of dice in hand");
-        handBox.setEditable(true);
-        handBox.addItemListener(this::handBoxChanged);
-        setHandSize(handOptions[0]);
-
         // sets up rolls option box
-        JLabel rollOptionsLabel = new JLabel("select # of rolls per turn");
-        rollBox.setEditable(true);
-        rollBox.addItemListener(this::rollBoxChanged);
-        setRolls(rollOptions[0]);
+        JLabel playersOptionsLabel = new JLabel("select # of players");
+        playersBox.setEditable(true);
+        playersBox.addItemListener(this::numPlayersChanged);
+        setNumPlayers(numPlayers[0]);
 
         // create a new panel for dice options
         JPanel diceOptionsPanel = new JPanel();
         diceOptionsPanel.add(diceOptionsLabel);
         diceOptionsPanel.add(diceBox);
 
-        //creates a new panel for hand options
-        JPanel handOptionsPanel = new JPanel();
-        handOptionsPanel.add(handOptionsLabel);
-        handOptionsPanel.add(handBox);
+        // create a new panel for dice options
+        JPanel playerOptionsPanel = new JPanel();
+        playerOptionsPanel.add(playersOptionsLabel);
+        playerOptionsPanel.add(playersBox);
 
-        //creates a new panel for roll options
-        JPanel rollOptionsPanel = new JPanel();
-        rollOptionsPanel.add(rollOptionsLabel);
-        rollOptionsPanel.add(rollBox);
 
         //creates a new button to allow user to submit options
         JButton submitOptionsButton = new JButton("Submit Options");
@@ -157,8 +169,7 @@ public class Rules {
 
         // adds panels and submit button to frame
         f.add(diceOptionsPanel);
-        f.add(handOptionsPanel);
-        f.add(rollOptionsPanel);
+        f.add(playerOptionsPanel);
         f.add(submitOptionsButton);
 
         //sets size of frame and creates visibility
@@ -200,6 +211,13 @@ public class Rules {
         System.out.println(ROLLS);
     }
 
+    public void numPlayersChanged(ItemEvent e) {
+        Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
+        setNumPlayers(num);
+        System.out.println(NUM_PLayers);
+    }
+
+
     /**
      Detects when set options button is pressed, creates a new game, and closes
      the options window
@@ -212,8 +230,15 @@ public class Rules {
         f.dispose();
         try {
             //plays new game of yahtzee
-            game = new YahtzeeGUI();
-            game.playGame();
+
+            System.out.println("Num Players: " + NUM_PLayers);
+            System.out.println("Hello");
+            for (int i = 0; i < NUM_PLayers; i++) {
+                game = new YahtzeeGUI((i+1));
+                playerScreens.add(game);
+                playerScreens.get(i).playGame();
+            }
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

@@ -51,11 +51,13 @@ public class YahtzeeGUI {
     private ArrayList<DieView> buttons;
     private JPanel intructionPanel;
     private int clicked;
-
+    private int playerNumber;
+    private Boolean isVisible;
     /**
      Constructor for YahtzeeGUI
      */
-    public YahtzeeGUI() throws IOException {
+    public YahtzeeGUI(int playerNum) throws IOException {
+        playerNumber = playerNum;
         mainFrame=new JFrame("Yahtzee");
         rollDiceB = new JButton("Roll Dice");
         showScorecard = new JButton("Show Scorecard");
@@ -102,7 +104,6 @@ public class YahtzeeGUI {
         showScorecard.setBounds(700,200,150,50);
         showScorecard.addActionListener(this::scorecardClicked);
         mainFrame.add(showScorecard);
-
 
         mainFrame.setVisible(true);
     }
