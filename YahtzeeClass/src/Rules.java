@@ -30,6 +30,7 @@ public class Rules {
     private static int SIDES = 6;
     private static int NUM_PLayers;
     private static ArrayList<YahtzeeGUI> playerScreens = new ArrayList<YahtzeeGUI>();
+    public static int screenCount;
 
 
     private YahtzeeGUI game;
@@ -40,6 +41,11 @@ public class Rules {
      */
     public Rules() throws IOException {
         setGuiRules();
+        screenCount = NUM_PLayers;
+    }
+
+    public static  ArrayList<YahtzeeGUI> getPlayerScreens() {
+        return playerScreens;
     }
 
     /**
@@ -238,10 +244,18 @@ public class Rules {
                 playerScreens.add(game);
                 playerScreens.get(i).playGame();
             }
+            playerScreens.get(0).setIsVisible(true);
 
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     };
+
+    public static void setCurrentScreen() {
+        int currScreen = screenCount % NUM_PLayers;
+        System.out.println("Curr Screen" + currScreen);
+        playerScreens.get(currScreen).setIsVisible(true);
+        ++screenCount;
+    }
 
 }
