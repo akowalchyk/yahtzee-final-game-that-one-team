@@ -69,6 +69,16 @@ public class YahtzeeGUI {
         scoreOptionsPanel = new JPanel();
         intructionPanel = new JPanel();
         clicked = 0;
+        setIsVisible(false);
+    }
+
+    public void setIsVisible(Boolean visible) {
+        isVisible = visible;
+        if (isVisible == true) {
+            mainFrame.setVisible(true);
+        } else {
+            mainFrame.setVisible(false);
+        }
     }
 
     /**
@@ -105,7 +115,6 @@ public class YahtzeeGUI {
         showScorecard.addActionListener(this::scorecardClicked);
         mainFrame.add(showScorecard);
 
-        mainFrame.setVisible(true);
     }
 
     /**
@@ -127,6 +136,8 @@ public class YahtzeeGUI {
                 "the next turn will");
         JLabel step33 = new JLabel("automatically begin and you " +
                 "can roll your next dice.");
+        JLabel playerLabel = new JLabel("Player #" + Integer.toString(playerNumber));
+
 
         //setting size of instructions
         step1.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -134,6 +145,7 @@ public class YahtzeeGUI {
         step22.setFont(new Font("Arial", Font.PLAIN, 20));
         step3.setFont(new Font("Arial", Font.PLAIN, 20));
         step33.setFont(new Font("Arial", Font.PLAIN, 20));
+        playerLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 
         //setting up instruction panel
         intructionPanel.setSize(700,700);
@@ -144,6 +156,7 @@ public class YahtzeeGUI {
         intructionPanel.add(step22);
         intructionPanel.add(step3);
         intructionPanel.add(step33);
+        intructionPanel.add(playerLabel);
 
         //adding instruction panel to main frame
         mainFrame.add(intructionPanel);

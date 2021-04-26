@@ -307,12 +307,12 @@ public class Scorecard {
 
         //prints score for min of a kind
         if (maxOfAKindFound(hand) >= minKindNum) {
-            System.out.print("Score " + totalAllDice(hand) + " on the ");
-            System.out.println("min of a Kind line");
+            //System.out.print("Score " + totalAllDice(hand) + " on the ");
+            //System.out.println("min of a Kind line");
             curr_lower_scores.add(totalAllDice(hand));
         }
         else {
-            System.out.println("Score 0 on the min of a Kind line");
+            //System.out.println("Score 0 on the min of a Kind line");
             curr_lower_scores.add(0);
         }
 
@@ -320,57 +320,57 @@ public class Scorecard {
         //prints score for max of a kind
         if (maxOfAKindFound(hand) >= maxKindNum)
         {
-            System.out.print("Score " + totalAllDice(hand) + " on the ");
+            //System.out.print("Score " + totalAllDice(hand) + " on the ");
             System.out.println("max of a Kind line");
-            curr_lower_scores.add(totalAllDice(hand));
+            //curr_lower_scores.add(totalAllDice(hand));
         }
         else {
-            System.out.println("Score 0 on the max of a Kind line");
+            //System.out.println("Score 0 on the max of a Kind line");
             curr_lower_scores.add(0);
         }
 
         //prints score for fullHouse
         if (fullHouseFound(hand)) {
-            System.out.println("Score 25 on the Full House line");
+            //System.out.println("Score 25 on the Full House line");
             curr_lower_scores.add(25);
         } else {
-            System.out.println("Score 0 on the Full House line");
+            //System.out.println("Score 0 on the Full House line");
             curr_lower_scores.add(0);
         }
 
         //prints score for small straight
         if (maxStraightFound(hand) >= 4) {
-            System.out.println("Score 30 on the Small Straight line");
+            //System.out.println("Score 30 on the Small Straight line");
             curr_lower_scores.add(30);
         } else {
-            System.out.println("Score 0 on the Small Straight line");
+            //System.out.println("Score 0 on the Small Straight line");
             curr_lower_scores.add(0);
         }
 
         //prints score for large straight
         if (maxStraightFound(hand) >= 5) {
-            System.out.println("Score 40 on the Large Straight line");
+            //System.out.println("Score 40 on the Large Straight line");
             curr_lower_scores.add(40);
         } else {
-            System.out.println("Score 0 on the Large Straight line");
+            //System.out.println("Score 0 on the Large Straight line");
             curr_lower_scores.add(0);
         }
 
         //prints score for Yahtzee
         if (maxOfAKindFound(hand) >= 5) {
-            System.out.println("Score 50 on the Yahtzee line");
+            //System.out.println("Score 50 on the Yahtzee line");
             curr_lower_scores.add(50);
         }
         else {
-            System.out.println("Score 0 on the Yahtzee line");
+            //System.out.println("Score 0 on the Yahtzee line");
             curr_lower_scores.add(0);
         }
 
         //prints score for Chance line
-        System.out.print("Score " + totalAllDice(hand) + " on the ");
+        //System.out.print("Score " + totalAllDice(hand) + " on the ");
         curr_lower_scores.add(totalAllDice(hand));
-        System.out.println("Chance line");
-        System.out.println();
+        //System.out.println("Chance line");
+        //System.out.println();
 
         return curr_lower_scores;
     }
@@ -397,8 +397,8 @@ public class Scorecard {
 
             //gets the score of the dieNUm, prints it out, and adds it to the list of scores
             score = dieValue * currentCount;
-            System.out.print("Score " + score + " on the ");
-            System.out.println(dieValue + " line");
+            //System.out.print("Score " + score + " on the ");
+            //System.out.println(dieValue + " line");
             curr_upper_scores.add(score);
         }
         return curr_upper_scores;
