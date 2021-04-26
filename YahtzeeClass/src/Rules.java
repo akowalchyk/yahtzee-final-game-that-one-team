@@ -135,6 +135,7 @@ public class Rules {
 
         // sets layout of frame
         f.setLayout(new FlowLayout());
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // Exit the program if the frame is closed by the user
 
         // arrays for options of # of sides on a die, # of dice in a hand,
         // and number of rolls allowed
