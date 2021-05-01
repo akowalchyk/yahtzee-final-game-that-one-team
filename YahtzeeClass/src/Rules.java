@@ -35,6 +35,7 @@ public class Rules {
 
     private YahtzeeGUI game;
     private JFrame f;
+    private JFrame playerNameFrame;
 
     /**
      Constructor for Rules class, sets initial rules
@@ -184,6 +185,59 @@ public class Rules {
         f.setVisible(true);
     }
 
+    public void setPlayerNames() {
+        playerNameFrame = new JFrame("Name Your Players!");
+        playerNameFrame.setLayout(new GridBagLayout());
+        playerNameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JLabel l;
+        JTextField t;
+        JButton b;
+        Container cp = playerNameFrame.getContentPane();
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.insets = new Insets(2,2,2,2);
+        c.anchor = GridBagConstraints.EAST;
+
+        char letter = 'A';
+        for(int i = 0; i < NUM_PLayers; i++) {
+            playerNameFrame.add(l = new JLabel("Player: " + (i + 1), SwingConstants.RIGHT), c);
+            l.setDisplayedMnemonic(letter++);
+        }
+
+        c.gridx = 1;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.CENTER;
+
+        letter = 'A';
+        c.gridx = 1;
+        c.gridy = GridBagConstraints.RELATIVE;
+
+        for (int i = 0; i < NUM_PLayers; i++) {
+            playerNameFrame.add(t = new JTextField(35), c);
+            t.setFocusAccelerator(letter++);
+        }
+
+        c.weightx = 0.0;
+
+        c.fill = GridBagConstraints.NONE;
+
+        JButton submitPlayerNameButton = new JButton("OK!");
+        submitPlayerNameButton.addActionListener(this::nameSetButton);
+        playerNameFrame.add(submitPlayerNameButton);
+
+        playerNameFrame.pack();
+
+        playerNameFrame.setVisible(true);
+
+    }
+
     /**
      Detects when the DiceBox is changed and changes SIDES to sides selected by user
      *
@@ -236,8 +290,17 @@ public class Rules {
         //closes window
         f.dispose();
         try {
+            setPlayerNames();
             //plays new game of yahtzee
+        }
+        finally {
 
+        }
+    };
+
+    public void nameSetButton(ActionEvent e) {
+        playerNameFrame.dispose();
+        try {
             System.out.println("Num Players: " + NUM_PLayers);
             System.out.println("Hello");
             for (int i = 0; i < NUM_PLayers; i++) {
@@ -246,8 +309,9 @@ public class Rules {
                 playerScreens.get(i).playGame();
             }
             playerScreens.get(0).setIsVisible(true);
-
-        } catch (IOException ioException) {
+        }
+        catch (IOException ioException)
+        {
             ioException.printStackTrace();
         }
     };
