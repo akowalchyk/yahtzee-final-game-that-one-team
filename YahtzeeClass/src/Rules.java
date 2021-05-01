@@ -185,19 +185,19 @@ public class Rules {
         f.setVisible(true);
     }
 
-    public void setPlayerNames() {
+    private void setPlayerNames() {
+        String[] namesOfPlayers;
         playerNameFrame = new JFrame("Name Your Players!");
         playerNameFrame.setLayout(new GridBagLayout());
         playerNameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel l;
         JTextField t;
-        JButton b;
         Container cp = playerNameFrame.getContentPane();
         GridBagConstraints c = new GridBagConstraints();
 
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = GridBagConstraints.RELATIVE;
         c.gridwidth = 1;
         c.gridheight = 1;
         c.insets = new Insets(2,2,2,2);
@@ -205,12 +205,12 @@ public class Rules {
 
         char letter = 'A';
         for(int i = 0; i < NUM_PLayers; i++) {
-            playerNameFrame.add(l = new JLabel("Player: " + (i + 1), SwingConstants.RIGHT), c);
+            playerNameFrame.add(l = new JLabel("Player " + (i + 1) + ": ", SwingConstants.RIGHT), c);
             l.setDisplayedMnemonic(letter++);
         }
 
         c.gridx = 1;
-        c.gridy = 0;
+        c.gridx = 1;
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.CENTER;
@@ -291,7 +291,6 @@ public class Rules {
         f.dispose();
         try {
             setPlayerNames();
-            //plays new game of yahtzee
         }
         finally {
 
