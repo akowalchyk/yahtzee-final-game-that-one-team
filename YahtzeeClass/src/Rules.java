@@ -189,7 +189,6 @@ public class Rules {
     }
 
     private void setPlayerNames() {
-        String[] namesOfPlayers;
         playerNameFrame = new JFrame("Name Your Players!");
         playerNameFrame.setLayout(new GridBagLayout());
         playerNameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
