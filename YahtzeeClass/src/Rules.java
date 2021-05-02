@@ -143,29 +143,16 @@ public class Rules {
 
         // arrays for options of # of sides on a die, # of dice in a hand,
         // and number of rolls allowed
-        Integer diceOptions[] = {6, 8, 12};
         Integer numPlayers[] = {1,2,3,4,5,6};
 
-        // creates comboBox for each option of rules
-        JComboBox diceBox = new JComboBox(diceOptions);
         JComboBox playersBox = new JComboBox(numPlayers);
 
-        // sets up dice combo box
-        JLabel diceOptionsLabel = new JLabel("select # of sides on a die");
-        diceBox.setEditable(true);
-        diceBox.addItemListener(this::diceBoxChanged);
-        setSIDES(diceOptions[0]);
 
         // sets up rolls option box
         JLabel playersOptionsLabel = new JLabel("select # of players");
         playersBox.setEditable(true);
         playersBox.addItemListener(this::numPlayersChanged);
         setNumPlayers(numPlayers[0]);
-
-        // create a new panel for dice options
-        JPanel diceOptionsPanel = new JPanel();
-        diceOptionsPanel.add(diceOptionsLabel);
-        diceOptionsPanel.add(diceBox);
 
         // create a new panel for dice options
         JPanel playerOptionsPanel = new JPanel();
@@ -179,7 +166,6 @@ public class Rules {
 
 
         // adds panels and submit button to frame
-        f.add(diceOptionsPanel);
         f.add(playerOptionsPanel);
         f.add(submitOptionsButton);
 
@@ -237,39 +223,9 @@ public class Rules {
 
     }
 
-    /**
-     Detects when the DiceBox is changed and changes SIDES to sides selected by user
-     *
-     * @param e: item event
-     */
-    public void diceBoxChanged(ItemEvent e) {
-        Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
-        setSIDES(num);
-    }
 
-    /**
-     Detects when the HandBox is changed and changes HAND_SIZE
-     to hand size selected by user
-     *
-     * @param e: item event
-     */
-    public void handBoxChanged(ItemEvent e) {
-        Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
-        setHandSize(num);
-        System.out.println(HAND_SIZE);
-    }
 
-    /**
-     Detects when the rollBox is changed and changes ROLLS
-     to # of rolls selected by user
-     *
-     * @param e: item event
-     */
-    public void rollBoxChanged(ItemEvent e) {
-        Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
-        setRolls(num);
-        System.out.println(ROLLS);
-    }
+
 
     public void numPlayersChanged(ItemEvent e) {
         Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
