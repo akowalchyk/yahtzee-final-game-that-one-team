@@ -35,6 +35,9 @@ public class Rules {
 
     private YahtzeeGUI game;
     private JFrame f;
+    private JTextField t;
+    private ArrayList<JTextField> names = new ArrayList<JTextField>();
+    private ArrayList<String> namesArray = new ArrayList<String>();
     private JFrame playerNameFrame;
 
     /**
@@ -192,7 +195,7 @@ public class Rules {
         playerNameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel l;
-        JTextField t;
+
         Container cp = playerNameFrame.getContentPane();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -203,11 +206,8 @@ public class Rules {
         c.insets = new Insets(2,2,2,2);
         c.anchor = GridBagConstraints.EAST;
 
-        char letter = 'A';
-        for(int i = 0; i < NUM_PLayers; i++) {
+        for(int i = 0; i < NUM_PLayers; i++)
             playerNameFrame.add(l = new JLabel("Player " + (i + 1) + ": ", SwingConstants.RIGHT), c);
-            l.setDisplayedMnemonic(letter++);
-        }
 
         c.gridx = 1;
         c.gridx = 1;
@@ -215,14 +215,14 @@ public class Rules {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.CENTER;
 
-        letter = 'A';
         c.gridx = 1;
         c.gridy = GridBagConstraints.RELATIVE;
 
-        for (int i = 0; i < NUM_PLayers; i++) {
-            playerNameFrame.add(t = new JTextField(35), c);
-            t.setFocusAccelerator(letter++);
-        }
+        for (int i = 0; i < NUM_PLayers; i++)
+            names.add(t = new JTextField(35));
+
+        for (JTextField tField : names)
+            playerNameFrame.add(tField, c);
 
         c.weightx = 0.0;
 
@@ -298,12 +298,15 @@ public class Rules {
     };
 
     public void nameSetButton(ActionEvent e) {
+        
+        for (JTextField tField : names)
+            namesArray.add(tField.getText().trim());
+
         playerNameFrame.dispose();
         try {
             System.out.println("Num Players: " + NUM_PLayers);
-            System.out.println("Hello");
             for (int i = 0; i < NUM_PLayers; i++) {
-                game = new YahtzeeGUI((i+1));
+                game = new YahtzeeGUI((i+1), namesArray.get(i));
                 playerScreens.add(game);
                 playerScreens.get(i).playGame();
             }
