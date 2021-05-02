@@ -54,13 +54,15 @@ public class YahtzeeGUI {
     private int clicked;
     private int playerNumber;
     private Boolean isVisible;
+    private String playerName;
 
     /**
      Constructor for YahtzeeGUI
      */
-    public YahtzeeGUI(int playerNum) throws IOException {
+    public YahtzeeGUI(int playerNum, String paramPlayerName) throws IOException {
+        playerName = paramPlayerName;
         playerNumber = playerNum;
-        mainFrame=new JFrame("Yahtzee");
+        mainFrame=new JFrame("It's " + playerName + "'s Turn!");
         rollDiceB = new JButton("Roll Dice");
         showScorecard = new JButton("Show Scorecard");
         newHand = new HandOfDice();
@@ -141,7 +143,7 @@ public class YahtzeeGUI {
                 "the next turn will");
         JLabel step33 = new JLabel("automatically begin and you " +
                 "can roll your next dice.");
-        JLabel playerLabel = new JLabel("Player #" + Integer.toString(playerNumber));
+        JLabel playerLabel = new JLabel("It's " + playerName + "'s Turn!");
 
 
         //setting size of instructions
@@ -150,7 +152,7 @@ public class YahtzeeGUI {
         step22.setFont(new Font("Arial", Font.PLAIN, 20));
         step3.setFont(new Font("Arial", Font.PLAIN, 20));
         step33.setFont(new Font("Arial", Font.PLAIN, 20));
-        playerLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        playerLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
         //setting up instruction panel
         intructionPanel.setSize(700,700);
