@@ -46,15 +46,14 @@ public class YahtzeeGUI {
     private HandView handView;
     private Scorecard scorecard;
     private  ScorecardView scorecardView;
+    //private FinalView finalView;
     private JPanel labelPanel;
     private JPanel scoreOptionsPanel;
-    private JPanel scoresPanel;
     private ArrayList<DieView> buttons;
     private JPanel intructionPanel;
     private int clicked;
     private int playerNumber;
     private Boolean isVisible;
-
     /**
      Constructor for YahtzeeGUI
      */
@@ -69,8 +68,8 @@ public class YahtzeeGUI {
         scorecardView = new ScorecardView(scorecard);
         labelPanel = new JPanel();
         scoreOptionsPanel = new JPanel();
-        scoresPanel = new JPanel();
         intructionPanel = new JPanel();
+
         clicked = 0;
         setIsVisible(false);
     }
@@ -112,14 +111,16 @@ public class YahtzeeGUI {
         //Setting up LabelPanel and ScoreOptionsPanel
         setLabelPanel();
         setScoreOptionsPanel();
-        setScoresPanel();
 
         //Setting up show scorecard button
         showScorecard.setBounds(700,200,150,50);
         showScorecard.addActionListener(this::scorecardClicked);
-        //mainFrame.add(showScorecard);
+        mainFrame.add(showScorecard);
 
+    }
 
+    public Scorecard getScorecard() {
+        return scorecard;
     }
 
     /**
@@ -167,6 +168,38 @@ public class YahtzeeGUI {
         mainFrame.add(intructionPanel);
     }
 
+    private void winnerDisplay(int playerNumber, int playScore) {
+
+        //creating block of text
+        JFrame winnerFrame = new JFrame("Winner");
+        winnerFrame.setSize(400,700);
+
+        JPanel winnerPanel = new JPanel();
+        JLabel title = new JLabel("Final Scorecard");
+        JLabel subtitle = new JLabel("Winner...");
+
+        JLabel playerLabel = new JLabel("Player #" + Integer.toString(playerNumber) + " " + "Score: " + Integer.toString(playScore));
+
+
+        //setting size of instructions
+        title.setFont(new Font("Arial", Font.PLAIN, 30));
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 20));
+        playerLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        //setting up instruction panel
+        winnerPanel.setSize(700,700);
+        winnerPanel.setLocation(0,220);
+        winnerPanel.setLayout(new BoxLayout(intructionPanel, BoxLayout.Y_AXIS));
+        winnerPanel.add(title);
+        winnerPanel.add(subtitle);
+
+        winnerPanel.add(playerLabel);
+
+        //adding instruction panel to main frame
+        winnerFrame.add(winnerPanel);
+        winnerFrame.setVisible(true);
+    }
+
     /**
      Rolls GUI Dice
      */
@@ -192,7 +225,7 @@ public class YahtzeeGUI {
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
         labelPanel.setLocation(1000,80);
-        labelPanel.setSize(250,1000);
+        labelPanel.setSize(2000,2000);
 
         //creating label for label panel
         JLabel labelLabel = new JLabel("Possible Scores");
@@ -221,7 +254,7 @@ public class YahtzeeGUI {
         //creating scoreOptionsPanel
         scoreOptionsPanel.setLayout(new BoxLayout(scoreOptionsPanel, BoxLayout.Y_AXIS));
         scoreOptionsPanel.setLocation(900,80);
-        scoreOptionsPanel.setSize(200,1000);
+        scoreOptionsPanel.setSize(2000,2000);
 
         //creating scoreOptionsPanel Label
         JLabel optionsLabel = new JLabel("Scores");
@@ -238,60 +271,6 @@ public class YahtzeeGUI {
             scoreOptionsPanel.add(lowerLabelOptions.get(i));
         }
         mainFrame.add(scoreOptionsPanel);
-    }
-
-    public void setScoresPanel() {
-        //sets initial frame and panel
-
-        JPanel scoresPanel = new JPanel();
-        JLabel label = new JLabel("Scorecard");
-        label.setFont(new Font("Arial", Font.PLAIN,  40));
-        scoresPanel.add(label);
-        scoresPanel.setSize(2000, 2000);
-        scoresPanel.setLocation(1300, 80);
-        scoresPanel.setLayout(new BoxLayout(scoresPanel, BoxLayout.Y_AXIS));
-
-        ArrayList<JLabel> upperScoreViews = scorecardView.getUpperScoreViews();
-        ArrayList<JLabel> lowerScoreViews = scorecardView.getLowerScoreViews();
-
-        //printing upper section
-        JLabel label1 = new JLabel("Upper Section");
-        label1.setFont(new Font("Arial", Font.PLAIN,  20));
-        JLabel label2 = new JLabel("---------------------");
-        label2.setFont(new Font("Arial", Font.PLAIN,  20));
-        JLabel label3 = new JLabel("---------------------");
-        label3.setFont(new Font("Arial", Font.PLAIN,  20));
-        scoresPanel.add(label1);
-        scoresPanel.add(label2);
-        scoresPanel.add(label3);
-        for (int i = 0; i < upperScoreViews.size(); i++) {
-            scoresPanel.add(upperScoreViews.get(i));
-        }
-
-        JLabel label4 = new JLabel("---------------------");
-        label4.setFont(new Font("Arial", Font.PLAIN,  20));
-        scoresPanel.add(label4);
-
-        JLabel label5 = new JLabel("---------------------");
-        label5.setFont(new Font("Arial", Font.PLAIN,  20));
-        scoresPanel.add(label5);
-
-        //printing lower section
-
-        JLabel label6 = new JLabel("Lower Section");
-        label6.setFont(new Font("Arial", Font.PLAIN,  20));
-        scoresPanel.add(label6);
-
-        JLabel label7 = new JLabel("---------------------");
-        label7.setFont(new Font("Arial", Font.PLAIN,  20));
-        scoresPanel.add(label7);
-
-        for (int i = 0; i < lowerScoreViews.size(); i++) {
-            scoresPanel.add(lowerScoreViews.get(i));
-        }
-
-        mainFrame.add(scoresPanel);
-
     }
 
     /**
@@ -372,6 +351,17 @@ public class YahtzeeGUI {
             finalPanel.add(finalScore);
             mainFrame.add(finalPanel);
             showScorecard.doClick();
+
+        }
+
+        int gameOver = Rules.getNUM_PLayers() * (Rules.getSIDES() + 7);
+        System.out.println(gameOver);
+        if (Rules.getScreenCount() == 7) {
+            int winnerNum = Rules.getPlayerNumber();
+            int winnerScore = Rules.getWinnerScore();
+
+            winnerDisplay(winnerNum, winnerScore);
+
 
         }
 

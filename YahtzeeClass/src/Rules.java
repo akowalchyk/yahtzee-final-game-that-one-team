@@ -31,6 +31,9 @@ public class Rules {
     private static int NUM_PLayers;
     private static ArrayList<YahtzeeGUI> playerScreens = new ArrayList<YahtzeeGUI>();
     public static int screenCount;
+    private static int winnerScore;
+    private static int playerNumber;
+    private static ArrayList<Integer> playerTotals = new ArrayList<Integer>();
 
 
     private YahtzeeGUI game;
@@ -42,6 +45,50 @@ public class Rules {
     public Rules() throws IOException {
         setGuiRules();
         screenCount = NUM_PLayers;
+    }
+
+    public static int getNUM_PLayers() {
+        return NUM_PLayers;
+    }
+
+    public static int getSIDES() {
+        return SIDES;
+    }
+
+    public static int getWinnerScore() {
+        return winnerScore;
+    }
+
+    public static int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public static int getScreenCount() {
+        return screenCount;
+    }
+
+    public static void finalScore() {
+
+        int maxScore;
+        int playerNum;
+        int individualScore;
+
+        for (int i = 0; i < playerScreens.size(); i++) {
+            individualScore = playerScreens.get(i).getScorecard().getLowerTotal() + playerScreens.get(i).getScorecard().getUpperTotal();
+            playerTotals.add(individualScore);
+        }
+        maxScore = playerTotals.get(0);
+        playerNum = 0;
+
+        for (int j = 1; j < playerTotals.size(); j++) {
+            if (playerTotals.get(j) > maxScore) {
+                maxScore = playerTotals.get(j);
+                playerNum = j;
+            }
+        }
+        winnerScore = maxScore;
+        playerNumber = playerNum;
+
     }
 
     public static  ArrayList<YahtzeeGUI> getPlayerScreens() {
