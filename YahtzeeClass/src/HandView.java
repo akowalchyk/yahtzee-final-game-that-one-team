@@ -48,7 +48,6 @@ public class HandView {
      */
     public void changeHandView(HandOfDice hand) throws IOException {
         int dieNum = 0;
-        hand.printHand();
         for (int i = 0; i < hand.getHand().size(); i++) {
             buttons.get(i).setDieView(hand.getDie(i));
         }
