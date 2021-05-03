@@ -124,6 +124,8 @@ public class YahtzeeGUI {
 
     }
 
+    public Scorecard getScorecard() { return scorecard; }
+
     /**
      Adds instructions for the Yahtzee Game to the frame
      */
@@ -167,6 +169,42 @@ public class YahtzeeGUI {
 
         //adding instruction panel to main frame
         mainFrame.add(intructionPanel);
+    }
+
+    private void winnerDisplay(ArrayList<Integer> finalScores, ArrayList<String> finalNames) {
+
+        //creating block of text
+        JFrame winnerFrame = new JFrame("Winner");
+        winnerFrame.setSize(700,700);
+
+        JPanel winnerPanel = new JPanel();
+        JLabel title = new JLabel("Final Scorecard");
+
+        int count = 1;
+
+        winnerPanel.add(title);
+
+        for (int i = 0; i < finalScores.size(); i++) {
+            JLabel player = new JLabel("Player " + count + ". " + finalNames.get(i) + "'s" + " " + "Score: " + Integer.toString(finalScores.get(i)));
+            player.setFont(new Font("Arial", Font.PLAIN, 30));
+            winnerPanel.add(player);
+            count++;
+
+        }
+
+        //setting size of winner panel
+        title.setFont(new Font("Arial", Font.PLAIN, 40));
+
+        //setting up winner panel
+        winnerPanel.setSize(700,700);
+        winnerPanel.setLocation(0,220);
+        winnerPanel.setLayout(new BoxLayout(winnerPanel, BoxLayout.Y_AXIS));
+
+
+        //adding winner panel to main frame
+        winnerFrame.add(winnerPanel);
+        winnerFrame.setVisible(true);
+
     }
 
     /**
@@ -364,16 +402,19 @@ public class YahtzeeGUI {
             ((JButton)e.getSource()).setLabel("no more rolls");
         }
 
-        //checks if all scoring options have been selected and performs endgame
-        if (scorecardView.checkEndgame() == true) {
-            int total = scorecard.endGame();
-            JLabel finalScore = viewEndGame(total);
-            JPanel finalPanel = new JPanel();
-            finalPanel.setLocation(10,0);
-            finalPanel.setSize(2000,2000);
-            finalPanel.add(finalScore);
-            mainFrame.add(finalPanel);
-            showScorecard.doClick();
+        int gameOver = (Rules.getNUM_PLayers() * 13);
+        if (Rules.getScreenCount() == gameOver) {
+
+            Rules.finalScore();
+
+            ArrayList<Integer> finalScoresSorted;
+            finalScoresSorted = Rules.getPlayerTotals();
+
+            ArrayList<String> finalNamesSorted;
+            finalNamesSorted = Rules.getNamesArray();
+
+
+            winnerDisplay(finalScoresSorted, finalNamesSorted);
 
         }
 
