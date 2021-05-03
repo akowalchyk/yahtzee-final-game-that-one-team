@@ -64,6 +64,10 @@ public class Scorecard {
         lowerTotal = 0;
     }
 
+    public int getUpperTotal() { return upperTotal; }
+
+    public int getLowerTotal() { return lowerTotal; }
+
     /**
      Sets valid scores into a list of strings
      *
