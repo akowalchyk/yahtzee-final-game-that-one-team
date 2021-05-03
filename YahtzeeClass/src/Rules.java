@@ -60,10 +60,15 @@ public class Rules {
 
     public static int getScreenCount() { return screenCount; }
 
+    public static void enableAll() {
+        for (int i = 0; i < playerScreens.size(); i++) {
+            playerScreens.get(i).setIsVisible(true);
+        }
+    }
+
 
     public static void finalScore() {
 
-        System.out.println("name array " + namesArray);
 
         int individualScore;
 
@@ -74,8 +79,6 @@ public class Rules {
 
         int n = playerTotals.size();
 
-        System.out.println("player scores " + playerTotals);
-        System.out.println(("palyer aname " + namesArray));
 
         for(int i=0; i<n-1; i++){
             int max_indx = i;
@@ -92,8 +95,6 @@ public class Rules {
             namesArray.set(i, temp1);
 
         }
-        System.out.println("player scores " + playerTotals);
-        System.out.println(("palyer aname " + namesArray));
     }
 
     public static ArrayList<Integer> getPlayerTotals() {
@@ -286,7 +287,6 @@ public class Rules {
     public void numPlayersChanged(ItemEvent e) {
         Integer num = (Integer) ((JComboBox)e.getSource()).getSelectedItem();
         setNumPlayers(num);
-        System.out.println(NUM_PLayers);
     }
 
 
@@ -315,7 +315,6 @@ public class Rules {
 
         playerNameFrame.dispose();
         try {
-            System.out.println("Num Players: " + NUM_PLayers);
             for (int i = 0; i < NUM_PLayers; i++) {
                 game = new YahtzeeGUI((i+1), namesArray.get(i));
                 playerScreens.add(game);
@@ -331,7 +330,6 @@ public class Rules {
 
     public static void setCurrentScreen() {
         int currScreen = screenCount % NUM_PLayers;
-        System.out.println("Curr Screen" + currScreen);
         playerScreens.get(currScreen).setIsVisible(true);
         ++screenCount;
     }

@@ -69,54 +69,17 @@ public class ScorecardView extends Scorecard {
         this.currGame = currGame;
     }
 
-    public void setScoreCardView() {
-        //Setting up show scorecard button
-
-        //sets initial frame and panel
-        JFrame scorecardFrame = new JFrame("Scorecard");
-        scorecardFrame.setSize(100,700);
-        scorecardView.setSize(2000,2000);
-        scorecardView.setLocation(1300, 80);
-        scorecardView.setLayout(new BoxLayout(scorecardView, BoxLayout.Y_AXIS));
-
-        //printing upper section
-        scorecardView.add(new JLabel("Upper Section"));
-        scorecardView.add(new JLabel("---------------------"));
-        scorecardView.add(new JLabel("Upper Bonus = " + scorecard.computeBonus()));
-        for(int i = 0; i < scorecard.getUpperLabels().size(); i++){
-            JLabel score = new JLabel(scorecard.getUpperLabels().get(i) + " | "  +
-                    scorecard.getUpperScores().get(i));
-            score.setFont(new Font("Arial", Font.PLAIN, 30));
-            scorecardView.add(score);
-        }
-
-        scorecardView.add(new JLabel("----------------------------"));
-        scorecardView.add(new JLabel("----------------------------"));
-
-        //printing lower section
-        scorecardView.add(new JLabel("Lower Section"));
-        scorecardView.add(new JLabel("---------------------"));
-        for (int i = 0; i < scorecard.getLowerLabels().size(); i++) {
-            JLabel score = new JLabel(scorecard.getLowerLabels().get(i) + " | "  +
-                    scorecard.getLowerScores().get(i));
-            score.setFont(new Font("Arial", Font.PLAIN, 30));
-            scorecardView.add(score);
-        }
-    }
-
-    private void changeScoreCardView() {
-        for (int i = 0; i < scorecard.getLowerLabels().size(); i++) {
-            JLabel score = new JLabel(scorecard.getLowerLabels().get(i) + " | "  +
-                    scorecard.getLowerScores().get(i));
-            score.setFont(new Font("Arial", Font.PLAIN, 30));
-            scorecardView.add(score);
-        }
-    }
 
     private void setUpperScoreView() {
         for (int i = 0; i < scorecard.getUpperLabels().size(); i++) {
-            JLabel score = new JLabel(scorecard.getUpperLabels().get(i) + " | "  +
-                    scorecard.getUpperScores().get(i));
+
+            String scores = String.valueOf(scorecard.getUpperScores().get(i));
+            if (scores == "null") {
+                scores = "-";
+            }
+            String str = scorecard.getUpperLabels().get(i) + " | "  +
+                    scores;
+            JLabel score = new JLabel(str);
             score.setFont(new Font("Arial", Font.PLAIN, 30));
             upperScoreView.add(score);
         }
@@ -124,8 +87,14 @@ public class ScorecardView extends Scorecard {
 
     private void setLowerScoreView() {
         for (int i = 0; i < scorecard.getLowerLabels().size(); i++) {
-            JLabel score = new JLabel(scorecard.getLowerLabels().get(i) + " | "  +
-                    scorecard.getLowerScores().get(i));
+
+            String scores = String.valueOf(scorecard.getLowerScores().get(i));
+            if (scores == "null") {
+                scores = "-";
+            }
+            String str = scorecard.getLowerLabels().get(i) + " | "  +
+                    scores;
+            JLabel score = new JLabel(str);
             score.setFont(new Font("Arial", Font.PLAIN, 30));
             lowerScoreView.add(score);
         }
@@ -203,7 +172,11 @@ public class ScorecardView extends Scorecard {
      */
     public void changeUpperViewOptions(ArrayList<Integer> upperScores) {
         for (int i = 0; i < upperScores.size(); i++) {
-            upperViewOptions.get(i).setText(String.valueOf(upperScores.get(i)));
+            String str = String.valueOf(upperScores.get(i));
+            if (str == "null"){
+                str = "-";
+            }
+            upperViewOptions.get(i).setText(str);
         }
     }
 
@@ -214,22 +187,33 @@ public class ScorecardView extends Scorecard {
      */
     public void changeLowerViewOptions(ArrayList<Integer> lowerScores) {
         for (int i = 0; i < lowerScores.size(); i++) {
-            lowerViewOptions.get(i).setText(String.valueOf(lowerScores.get(i)));
+            String str = String.valueOf(lowerScores.get(i));
+            if (str == "null"){
+                str = "-";
+            }
+            lowerViewOptions.get(i).setText(String.valueOf(str));
         }
     }
 
     public void changeUpperScoreViews() {
         for (int i = 0; i < scorecard.getUpperLabels().size(); i++) {
-                    upperScoreView.get(i).setText((scorecard.getUpperLabels().get(i) + " | "  +
-                            scorecard.getUpperScores().get(i)));
+            String scores = String.valueOf(scorecard.getUpperScores().get(i));
+            if (scores == "null") {
+                scores = "-";
+            }
+            String str = scorecard.getUpperLabels().get(i) + " | "  + scores;
+            upperScoreView.get(i).setText(str);
         }
     }
 
     public void changeLowerScoreViews() {
-        System.out.println("Size: " + lowerScoreView.size());
         for (int i = 0; i < scorecard.getLowerLabels().size(); i++) {
-            lowerScoreView.get(i).setText(scorecard.getLowerLabels().get(i) + " | "  +
-                    scorecard.getLowerScores().get(i));
+            String scores = String.valueOf(scorecard.getLowerScores().get(i));
+            if (scores == "null") {
+                scores = "-";
+            }
+            String str = scorecard.getLowerLabels().get(i) + " | "  + scores;
+            lowerScoreView.get(i).setText(str);
         }
     }
 
@@ -269,9 +253,6 @@ public class ScorecardView extends Scorecard {
         return upperViewOptions;
     }
 
-    public JPanel getScorecardView() {
-        return scorecardView;
-    }
 
 
     /**
@@ -330,8 +311,12 @@ public class ScorecardView extends Scorecard {
         //resetting the handView and the Roll Dice Button
         currGame.resetHand();
         currGame.resetRollDiceB();
-        currGame.setIsVisible(false);
-        Rules.setCurrentScreen();
+
+        int gameOver = (Rules.getNUM_PLayers() * 13);
+        if (Rules.getScreenCount() != gameOver) {
+            currGame.setIsVisible(false);
+            Rules.setCurrentScreen();
+        }
         changeLowerScoreViews();
         changeUpperScoreViews();
 
@@ -360,31 +345,6 @@ public class ScorecardView extends Scorecard {
      *
      * @return endGame: false if no endGame, true if endGame
      */
-    public Boolean checkEndgame() {
-        Boolean endGame = false;
-        int count = 0;
-
-        //loops through upperViewLabels to check if clicked
-        for (int i = 0; i < Rules.getSides(); i++) {
-            if (upperViewLabels.get(i).isEnabled() == false) {
-                count+=1;
-            }
-        }
-
-        //loops through lowerViewLabels to check if clicked
-        for (int i = 0; i < lowerViewLabels.size(); i++) {
-            if (lowerViewLabels.get(i).isEnabled() == false) {
-                count+=1;
-            }
-        }
-
-        //checks if all options have been clicked
-        if (count == (Rules.getSides() +lowerViewLabels.size())) {
-            endGame = true;
-        }
-
-        return endGame;
-    }
 
 
 }

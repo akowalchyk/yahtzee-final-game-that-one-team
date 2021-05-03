@@ -488,7 +488,6 @@ public class Scorecard {
                 maxLength = curLength;
             }
         }
-        System.out.println(maxLength);
         return maxLength;
     }
 

@@ -76,13 +76,11 @@ public class DieView extends JToggleButton {
             if (state == ItemEvent.SELECTED) {
                 setBorder(redLine);
                 die.lock();
-                System.out.println("Selected");
 
             //if item is deselected, unlock the die and change border
             } else {
                 setBorder(blackLine);
                 die.unlock();
-                System.out.println("Deselected");
             }
         }
     };

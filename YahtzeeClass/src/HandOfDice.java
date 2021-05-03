@@ -43,7 +43,6 @@ public class HandOfDice {
     public void setInitialHand() {
 
         //adds new dice to the hand
-        System.out.println(handSize);
         for (int i = 0; i < handSize; i++) {
             Die newDie = new Die(6);
             hand.add(newDie);
@@ -68,7 +67,7 @@ public class HandOfDice {
      *
      */
     public void printHand() {
-        System.out.print("Your Roll was: ");
+
         //loops through the hand and prints each die
         for (int i = 0; i < handSize; i++) {
             System.out.print(hand.get(i));
@@ -104,13 +103,10 @@ public class HandOfDice {
                     temp.add(hand.get(i).getDieNum());
                 }
                 Collections.sort(temp);
-                System.out.print("Your Sorted Hand is: ");
 
                 //sets the dice values to be in sorted order and prints the hand
                 for (int i = 0; i < handSize; i++) {
                     hand.get(i).setDieNum(temp.get(i));
-                    System.out.print(hand.get(i).getDieNum() + " ");
                 }
-                System.out.println();
     }
 }

@@ -119,7 +119,17 @@ public class YahtzeeGUI {
         //Setting up show scorecard button
         showScorecard.setBounds(700,200,150,50);
         showScorecard.addActionListener(this::scorecardClicked);
-        //mainFrame.add(showScorecard);
+
+        JPanel playerPan = new JPanel();
+        playerPan.setLayout(new BoxLayout(playerPan, BoxLayout.Y_AXIS));
+        playerPan.setLocation(50,700);
+        playerPan.setSize(500,1000);
+        JLabel playerLabel = new JLabel("It's " + playerName + "'s Turn!");
+        playerLabel.setFont(new Font("Arial", Font.BOLD, 45));
+        playerPan.add(playerLabel);
+
+        mainFrame.add(playerPan);
+
 
 
     }
@@ -133,6 +143,8 @@ public class YahtzeeGUI {
 
         //creating block of text
         JPanel intructionPanel = new JPanel();
+
+        JLabel title = new JLabel("Instructions");
         JLabel step1 = new JLabel(
                 "Step #1: Click Dice you want to keep. " +
                         "Then roll remaining dice.");
@@ -142,30 +154,29 @@ public class YahtzeeGUI {
         JLabel step22 = new JLabel("click on a scoring option under " +
                 "possible scores.");
         JLabel step3 = new JLabel("Step #3: After you click a scoring option, " +
-                "the next turn will");
-        JLabel step33 = new JLabel("automatically begin and you " +
-                "can roll your next dice.");
-        JLabel playerLabel = new JLabel("It's " + playerName + "'s Turn!");
+                "the next player's turn will");
+        JLabel step33 = new JLabel("automatically begin");
 
 
         //setting size of instructions
+
+        title.setFont(new Font("Arial", Font.BOLD, 25));
         step1.setFont(new Font("Arial", Font.PLAIN, 20));
         step2.setFont(new Font("Arial", Font.PLAIN, 20));
         step22.setFont(new Font("Arial", Font.PLAIN, 20));
         step3.setFont(new Font("Arial", Font.PLAIN, 20));
         step33.setFont(new Font("Arial", Font.PLAIN, 20));
-        playerLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
         //setting up instruction panel
-        intructionPanel.setSize(700,700);
+        intructionPanel.setSize(700,300);
         intructionPanel.setLocation(0,220);
         intructionPanel.setLayout(new BoxLayout(intructionPanel, BoxLayout.Y_AXIS));
+        intructionPanel.add(title);
         intructionPanel.add(step1);
         intructionPanel.add(step2);
         intructionPanel.add(step22);
         intructionPanel.add(step3);
         intructionPanel.add(step33);
-        intructionPanel.add(playerLabel);
 
         //adding instruction panel to main frame
         mainFrame.add(intructionPanel);
@@ -174,18 +185,18 @@ public class YahtzeeGUI {
     private void winnerDisplay(ArrayList<Integer> finalScores, ArrayList<String> finalNames) {
 
         //creating block of text
-        JFrame winnerFrame = new JFrame("Winner");
+        JFrame winnerFrame = new JFrame("Final Scores");
         winnerFrame.setSize(700,700);
 
         JPanel winnerPanel = new JPanel();
-        JLabel title = new JLabel("Final Scorecard");
+        JLabel title = new JLabel("Final Scores");
 
         int count = 1;
 
         winnerPanel.add(title);
 
         for (int i = 0; i < finalScores.size(); i++) {
-            JLabel player = new JLabel("Player " + count + ". " + finalNames.get(i) + "'s" + " " + "Score: " + Integer.toString(finalScores.get(i)));
+            JLabel player = new JLabel(count + ".  " + finalNames.get(i) + "'s" + " " + "Score: " + Integer.toString(finalScores.get(i)));
             player.setFont(new Font("Arial", Font.PLAIN, 30));
             winnerPanel.add(player);
             count++;
@@ -415,11 +426,12 @@ public class YahtzeeGUI {
 
 
             winnerDisplay(finalScoresSorted, finalNamesSorted);
+            Rules.enableAll();
+        } else {
 
+            //rolls GUI dice
+            rollGUIDice();
         }
-
-        //rolls GUI dice
-        rollGUIDice();
 
     }
 
