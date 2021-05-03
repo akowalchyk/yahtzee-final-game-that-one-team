@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  Class Rules: Acts as the Rules object for a game of yahtzee.
@@ -31,13 +32,16 @@ public class Rules {
     private static int NUM_PLayers;
     private static ArrayList<YahtzeeGUI> playerScreens = new ArrayList<YahtzeeGUI>();
     public static int screenCount;
+    private static int winnerScore;
+    private static int playerNumber;
+    private static ArrayList<Integer> playerTotals = new ArrayList<>();
 
 
     private YahtzeeGUI game;
     private JFrame f;
     private JTextField t;
     private ArrayList<JTextField> names = new ArrayList<JTextField>();
-    private ArrayList<String> namesArray = new ArrayList<String>();
+    private static ArrayList<String> namesArray = new ArrayList<String>();
     private JFrame playerNameFrame;
 
     /**
@@ -46,6 +50,58 @@ public class Rules {
     public Rules() throws IOException {
         setGuiRules();
         screenCount = NUM_PLayers;
+    }
+
+    public static int getNUM_PLayers() { return NUM_PLayers; }
+
+    public static int getWinnerScore() { return winnerScore; }
+
+    public static int getPlayerNumber() { return playerNumber; }
+
+    public static int getScreenCount() { return screenCount; }
+
+
+    public static void finalScore() {
+
+        System.out.println("name array " + namesArray);
+
+        int individualScore;
+
+        for (int i = 0; i < playerScreens.size(); i++) {
+            individualScore = playerScreens.get(i).getScorecard().getLowerTotal() + playerScreens.get(i).getScorecard().getUpperTotal();
+            playerTotals.add(individualScore);
+        }
+
+        int n = playerTotals.size();
+
+        System.out.println("player scores " + playerTotals);
+        System.out.println(("palyer aname " + namesArray));
+
+        for(int i=0; i<n-1; i++){
+            int max_indx = i;
+            for (int j = i+1; j < n; j++) {
+                if (playerTotals.get(j) > playerTotals.get(i))
+                    max_indx = j;
+            }
+            int temp = playerTotals.get(max_indx);
+            String temp1 = namesArray.get(max_indx);
+            playerTotals.set(max_indx,playerTotals.get(i));
+
+            namesArray.set(max_indx, namesArray.get(i));
+            playerTotals.set(i, temp);
+            namesArray.set(i, temp1);
+
+        }
+        System.out.println("player scores " + playerTotals);
+        System.out.println(("palyer aname " + namesArray));
+    }
+
+    public static ArrayList<Integer> getPlayerTotals() {
+        return playerTotals;
+    }
+
+    public static ArrayList<String> getNamesArray() {
+        return namesArray;
     }
 
     public static  ArrayList<YahtzeeGUI> getPlayerScreens() {
