@@ -80,10 +80,10 @@ public class Rules {
         int n = playerTotals.size();
 
 
-        for(int i=0; i<n-1; i++){
+        for(int i = 0; i < n-1; i++){
             int max_indx = i;
-            for (int j = i+1; j < n; j++) {
-                if (playerTotals.get(j) > playerTotals.get(i))
+            for (int j = i + 1; j < n; j++) {
+                if (playerTotals.get(j) > playerTotals.get(max_indx))
                     max_indx = j;
             }
             int temp = playerTotals.get(max_indx);
